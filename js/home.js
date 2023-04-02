@@ -31,7 +31,6 @@ const displayProducts = async () => {
     products = products.slice(0, 3);
     featureCenter.innerHTML = products.join('');
 }
-
 // display products
 displayProducts();
 
