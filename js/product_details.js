@@ -46,9 +46,6 @@ const displayProduct = async () => {
         console.log();
         singleProduct.innerHTML = `<center><h3 class="error">There was an error...</h3></center>`;
     }
-
-
 }
 // display the product
 displayProduct();
-
