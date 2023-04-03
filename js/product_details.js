@@ -35,6 +35,8 @@ const displayProduct = async () => {
             </article>
           </div>
             `
+        let pageHeroTitle = document.querySelector('.page-hero-title');
+        pageHeroTitle.innerHTML = `Home / ${data.fields.name}`;
         singleProduct.innerHTML = product;
         // display the colors
         data.fields.colors.forEach((color) => {
@@ -43,7 +45,7 @@ const displayProduct = async () => {
             colors.innerHTML += colorSpan;
         });
     } catch (error) {
-        console.log();
+        console.log(error);
         singleProduct.innerHTML = `<center><h3 class="error">There was an error...</h3></center>`;
     }
 }

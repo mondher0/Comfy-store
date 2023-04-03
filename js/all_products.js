@@ -73,6 +73,7 @@ search.addEventListener("input", (e) => {
    searchProducts(term);
 });
 
+
 // function to filter products by company
 function filterProducts(company) {
   let products = document.querySelectorAll('.product');
