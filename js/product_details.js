@@ -37,6 +37,8 @@ const displayProduct = async () => {
             `
         let pageHeroTitle = document.querySelector('.page-hero-title');
         pageHeroTitle.innerHTML = `Home / ${data.fields.name}`;
+        let title = document.querySelector('title');
+        title.innerHTML = `${data.fields.name} | Comfy`;
         singleProduct.innerHTML = product;
         // display the colors
         data.fields.colors.forEach((color) => {
