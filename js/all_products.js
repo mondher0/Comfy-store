@@ -7,7 +7,6 @@ let productsContainer = document.querySelector('.products-container');
 const displayProducts = async () => {
   try {
     let data = await getProducts(productUrl);
-    console.log(data);
     let products = data.map((product) => {
         return `
         <article class="product">
