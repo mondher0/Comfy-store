@@ -473,7 +473,6 @@ Cart
   margin: 1rem 0;
   display: grid;
   grid-template-columns: auto 1fr auto;
-
   column-gap: 1.5rem;
   align-items: center;
 }
@@ -774,4 +773,7 @@ Single Product Page
   .single-product-center {
     grid-template-columns: 1fr 1fr;
   }
+}
+.product-company {
+  display:none;
 }
