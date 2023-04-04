@@ -30,6 +30,23 @@ const displayProducts = async () => {
         `;
     });
     productsContainer.innerHTML = products.join('');
+
+    // when we click add to cart
+    let cartBtns = document.querySelectorAll('.product-cart-btn');
+    let cartOverlay = document.querySelector('.cart-overlay');
+    cartBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        let id = e.currentTarget.dataset.id;
+        let item = data.find((item) => item.id === id);
+        addToCart(item, id);
+        cartOverlay.classList.add('show');
+      });
+    }); 
+    // close cart
+    let cartClose = document.querySelector('.cart-close');
+    cartClose.addEventListener('click', () => {
+      cartOverlay.classList.remove('show');
+    });
   } catch (error) {
     console.log(error);
     productsContainer.innerHTML = `<h3 class="error">There was an error...</h3>`;
@@ -102,3 +119,51 @@ function searchProducts(term) {
       }
   });
 }
+
+// function add to cart
+let arr = [];
+function addToCart(item, id) {
+  let cartItems = document.querySelector('.cart-items');
+  if(arr.includes(id)) {
+    console.log(true);
+    let amount = document.querySelector(`[data-id="${id}"]`).parentElement.children[1];
+    console.log(amount.textContent);
+    amount.textContent = parseInt(amount.textContent) + item.fields.price / 100;
+  }else {
+    console.log(false);
+    arr.push(id);
+  cartItems.innerHTML += `
+  <article class="cart-item">
+  <img src="${item.fields.image[0].thumbnails.small.url}"
+  class="cart-item-img"
+  alt=""
+/>  
+<div>
+  <h4 class="cart-item-name">${item.fields.name}</h4>
+  <p class="cart-item-price">${item.fields.price / 100}</p>
+  <button class="cart-item-remove-btn" data-id="${id}">remove</button>
+</div>
+<div>
+  <button class="cart-item-increase-btn" data-id="${id}">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+  <p class="cart-item-amount" data-id="${id}">${item.fields.price / 100}</p>
+  <button class="cart-item-decrease-btn" data-id="${id}">
+    <i class="fas fa-chevron-down"></i>
+  </button>
+</div>
+</article>
+  `
+  }
+  // set cart in local storage
+  window.localStorage.setItem('cart', JSON.stringify(cartItems.innerHTML));
+}
+
+// get cart from local storage
+let cartItems = document.querySelector('.cart-items');
+window.addEventListener('DOMContentLoaded', () => {
+  if(window.localStorage.getItem('cart')) {
+    cartItems.innerHTML = JSON.parse(window.localStorage.getItem('cart'));
+    console.log(cartItems.innerHTML);
+  }
+});
