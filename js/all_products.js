@@ -1,7 +1,10 @@
+import {getProducts} from './functions.js';
+import {addToCart} from './functions.js';
+import {filterProducts} from './functions.js';
+import {searchProducts} from './functions.js';
+import {reloadPage} from './functions.js';
+import {cartIconClick} from './functions.js';
 let productUrl = 'https://course-api.com/javascript-store-products';
-// get the products from the server
-import {getProducts} from './get_products.js';
-
 let productsContainer = document.querySelector('.products-container');
 // display products
 const displayProducts = async () => {
@@ -89,81 +92,11 @@ search.addEventListener("input", (e) => {
    searchProducts(term);
 });
 
+// when we reload the page, the cart icon will be updated
+reloadPage();
 
-// function to filter products by company
-function filterProducts(company) {
-  let products = document.querySelectorAll('.product');
-  products.forEach((product) => {
-    if (company === 'all') {
-      product.style.display = 'grid';
-    }else if (product.children[2].textContent === company) {
-      product.style.display = 'grid';
-    }else {
-      product.style.display = 'none';
-    }
-  });
-}
-
-// function to search products by name
-function searchProducts(term) {
-  let products = document.querySelectorAll('.product');
-  products.forEach((product) => {
-      const title = product.children[1].children[0].innerText.toLowerCase();
-      if (title.indexOf(term) != -1) {
-          product.style.display = "grid";
-      }else {
-          product.style.display = "none";
-          // let container = document.querySelector(".courses .container");
-          // container.style.justifyContent = "center";
-          // container.innerHT((M))L = "<h1>Sorry, no²courses found</h1>";
-      }
-  });
-}
-
-// function add to cart
-let arr = [];
-function addToCart(item, id) {
-  let cartItems = document.querySelector('.cart-items');
-  if(arr.includes(id)) {
-    console.log(true);
-    let amount = document.querySelector(`[data-id="${id}"]`).parentElement.children[1];
-    console.log(amount.textContent);
-    amount.textContent = parseInt(amount.textContent) + item.fields.price / 100;
-  }else {
-    console.log(false);
-    arr.push(id);
-  cartItems.innerHTML += `
-  <article class="cart-item">
-  <img src="${item.fields.image[0].thumbnails.small.url}"
-  class="cart-item-img"
-  alt=""
-/>  
-<div>
-  <h4 class="cart-item-name">${item.fields.name}</h4>
-  <p class="cart-item-price">${item.fields.price / 100}</p>
-  <button class="cart-item-remove-btn" data-id="${id}">remove</button>
-</div>
-<div>
-  <button class="cart-item-increase-btn" data-id="${id}">
-    <i class="fas fa-chevron-up"></i>
-  </button>
-  <p class="cart-item-amount" data-id="${id}">${item.fields.price / 100}</p>
-  <button class="cart-item-decrease-btn" data-id="${id}">
-    <i class="fas fa-chevron-down"></i>
-  </button>
-</div>
-</article>
-  `
-  }
-  // set cart in local storage
-  window.localStorage.setItem('cart', JSON.stringify(cartItems.innerHTML));
-}
-
-// get cart from local storage
-let cartItems = document.querySelector('.cart-items');
-window.addEventListener('DOMContentLoaded', () => {
-  if(window.localStorage.getItem('cart')) {
-    cartItems.innerHTML = JSON.parse(window.localStorage.getItem('cart'));
-    console.log(cartItems.innerHTML);
-  }
+// when we click on the cart icon, the cart overlay will be shown
+let toggleCart = document.querySelector('.toggle-cart');
+toggleCart.addEventListener('click', () => {
+  cartIconClick();
 });
