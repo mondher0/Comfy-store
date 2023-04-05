@@ -68,3 +68,4 @@ let toggleCart = document.querySelector('.toggle-cart');
 toggleCart.addEventListener('click', () => {
   cartIconClick();
 });
+

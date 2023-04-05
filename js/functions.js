@@ -25,7 +25,7 @@ export function addToCart(item, id) {
       />  
       <div>
       <h4 class="cart-item-name">${item.fields.name}</h4>
-      <p class="cart-item-price">$${item.fields.price / 100}</p>
+      <p class="cart-item-price">$<span>${item.fields.price / 100}</span></p>
       <button class="cart-item-remove-btn" data-id="${id}">remove</button>
       </div>
       <div>
@@ -43,11 +43,19 @@ export function addToCart(item, id) {
       let amount = document.querySelector(`[info-id="${id}"]`);
       amount.textContent = parseInt(amount.textContent) + 1;
     }
-        // add to local storage
-        console.log();
-        window.localStorage.setItem('cart', JSON.stringify(cartItems.innerHTML));
+    // total
+    let total = document.querySelector('.cart-total span');
+    let prices = document.querySelectorAll('.cart-item-price span');
+    prices.forEach((price) => {
+        let amount = document.querySelector(`[info-id="${id}"]`);
+        total.textContent = parseInt(total.textContent) + parseInt(price.textContent);
+    });
+    console.log(prices);
+    console.log(cartItems.querySelector("span"));
+    // add to local storage
+    window.localStorage.setItem('cart', JSON.stringify(cartItems.innerHTML));
 }
-  
+
 // update cart icon 
 export function updateCartIcon() {
     let cartItems = document.querySelector('.cart-items');
